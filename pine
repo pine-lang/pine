@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+export WORKDIR=$(cd "$(dirname "$(realpath "$0")")" && pwd)
+. "$WORKDIR/common"
+
+cli_help() {
+  cli_name=${0##*/}
+  echo "
+$cli_name
+Pine CLI
+Version: $(cat $WORKDIR/VERSION)
+https://github.com/pine-lang/pine-cli
+
+Usage: $cli_name [command]
+
+Commands:
+  serve     Run the server and the frontend
+  *         Help
+"
+  exit 1
+}
+
+# cli_log "Reading configuration"
+# [ ! -f "$CONFIG_DIR/config" ] \
+#   && echo "ERROR: No $CONFIG_DIR/config file found. " \
+#   && echo "Run install script." \
+#   && exit 1
+
+# export $(cat "$CONFIG_DIR/config" | xargs)
+
+case "$1" in
+  serve)
+    "$WORKDIR/commands/serve" "$2" | tee -ia "$WORKDIR/logs/serve_${2}.log"
+    ;;
+  *)
+    cli_help
+    ;;
+esac

@@ -1,0 +1,6 @@
+[submodule "pine-lang"]
+	path = pine-lang
+	url = git@github.com:pine-lang/pine-lang.git
+[submodule "pine-app"]
+	path = pine-app
+	url = git@github.com:pine-lang/pine-app.git
