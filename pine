@@ -14,7 +14,9 @@ https://github.com/pine-lang/pine-cli
 Usage: $cli_name [command]
 
 Commands:
-  serve     Run the server and the frontend
+  serve     Run the pine server and the web app
+  repl      Run the clojure repl for development. Connect to it using emacs `cider-connect-clj`
+  config    See the configuration i.e. database connections etc.
   *         Help
 "
   exit 1
@@ -29,8 +31,14 @@ Commands:
 # export $(cat "$CONFIG_DIR/config" | xargs)
 
 case "$1" in
+  config)
+    "$WORKDIR/commands/config"
+     ;;
   serve)
-    "$WORKDIR/commands/serve" "$2" | tee -ia "$WORKDIR/logs/serve_${2}.log"
+    "$WORKDIR/commands/serve" | tee -ia "$WORKDIR/logs/serve.log"
+    ;;
+  repl)
+    "$WORKDIR/commands/repl" | tee -ia "$WORKDIR/logs/repl.log"
     ;;
   *)
     cli_help

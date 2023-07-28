@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-set -e
 . "$WORKDIR/common"
 
 cd $WORKDIR
+
+pine config > /dev/null
+if [ $? -ne 0 ]; then
+    cli_log "Config file needs to be created first."
+    exit 1
+fi
 
 pwd
 cd pine-lang

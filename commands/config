@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+. "$WORKDIR/common"
+
+cd $WORKDIR
+
+cat pine-lang/src/pine/config.clj

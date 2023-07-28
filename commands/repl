@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+. "$WORKDIR/common"
+
+cd $WORKDIR
+
+pwd
+cd pine-lang
+./repl.sh &
+cd -
