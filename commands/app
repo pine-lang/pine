@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+. "$WORKDIR/common"
+
+cd $WORKDIR
+
+cd pine-app
+./run.sh &
+cd -

@@ -34,6 +34,9 @@ case "$1" in
   config)
     "$WORKDIR/commands/config"
      ;;
+  app)
+      "$WORKDIR/commands/app" | tee -ia "$WORKDIR/logs/app.log"
+      ;;
   serve)
     "$WORKDIR/commands/serve" | tee -ia "$WORKDIR/logs/serve.log"
     ;;

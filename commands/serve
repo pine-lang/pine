@@ -13,7 +13,3 @@ pwd
 cd pine-lang
 ./server.sh &
 cd -
-
-cd pine-app
-./run.sh &
-cd -
