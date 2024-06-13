@@ -5,45 +5,59 @@ export WORKDIR=$(cd "$(dirname "$(realpath "$0")")" && pwd)
 
 cli_help() {
   cli_name=${0##*/}
-  echo "
-$cli_name
-Pine CLI
-Version: $(cat $WORKDIR/VERSION)
-https://github.com/pine-lang/pine-cli
+  echo -e "
+\033[90m
+  $cli_name
+  Pine Command Line Interface
+  Version: $(cat $WORKDIR/VERSION)
+  https://github.com/pine-lang/pine-cli
+`cat $WORKDIR/art/logo.txt`
+\033[0m
 
 Usage: $cli_name [command]
 
 Commands:
-  serve     Run the pine server and the web app
-  repl      Run the clojure repl for development. Connect to it using emacs `cider-connect-clj`
-  config    See the configuration i.e. database connections etc.
-  *         Help
+  run server    Run the pine server and the web app
+  config        See the configuration i.e. database connections etc.
+
+Only for Dev:
+  run app       Run the pine server and the web app
+  run repl      Run the clojure repl for development. Connect to it using emacs `cider-connect-clj` [Not needed for pine-reborn]
+  *             Help
 "
   exit 1
 }
 
-# cli_log "Reading configuration"
-# [ ! -f "$CONFIG_DIR/config" ] \
-#   && echo "ERROR: No $CONFIG_DIR/config file found. " \
-#   && echo "Run install script." \
-#   && exit 1
 
-# export $(cat "$CONFIG_DIR/config" | xargs)
+main () {
+    case "$2" in
+        app)
+            "$WORKDIR/commands/app" | tee -ia "$WORKDIR/logs/app.log"
+            ;;
+        server)
+            "$WORKDIR/commands/server" $2 | tee -ia "$WORKDIR/logs/server.log"
+            ;;
+        repl)
+            "$WORKDIR/commands/repl" | tee -ia "$WORKDIR/logs/repl.log"
+            ;;
+        *)
+            sub-main "$@"
+            ;;
+    esac
+}
 
-case "$1" in
-  config)
-    "$WORKDIR/commands/config"
-     ;;
-  app)
-      "$WORKDIR/commands/app" | tee -ia "$WORKDIR/logs/app.log"
-      ;;
-  serve)
-    "$WORKDIR/commands/serve" | tee -ia "$WORKDIR/logs/serve.log"
-    ;;
-  repl)
-    "$WORKDIR/commands/repl" | tee -ia "$WORKDIR/logs/repl.log"
-    ;;
-  *)
-    cli_help
-    ;;
-esac
+sub-main () {
+    case "$1" in
+        config)
+            "$WORKDIR/commands/config"
+            ;;
+        update)
+            "$WORKDIR/commands/update" "$1" | tee -ia "$WORKDIR/logs/update.log"
+            ;;
+        *)
+            cli_help
+            ;;
+    esac
+
+}
+main "$@"

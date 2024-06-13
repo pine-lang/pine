@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+. "$WORKDIR/common"
+
+cd $WORKDIR
+
+
+cli_log "Running in reborn mode"
+cd pine-lang-reborn
+./server.sh

@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+. "$WORKDIR/common"
+
+cd $WORKDIR
+
+CONFIG="${CONFIG:-default}"
+
+decrypt_config() {
+    mcrypt -d "$1"
+}
+
+CONFIG_FILE="$CONFIG_DIR/$CONFIG"
+TMP_FILE="$TMP_DIR/$CONFIG"
+
+if [ ! -f "$CONFIG_DIR/$CONFIG" ]; then
+    echo "Config file not found!"
+    exit 1
+fi
+
+mkdir -p $TMP_DIR
+cp $CONFIG_FILE $TMP_FILE
+
+# Check if the encrypted configuration file exists
+if  [[ "$TMP_FILE" == *.nc ]]; then
+    # TODO: get the decypted file name here !!
+    echo
+    echo Decrypting config file: $TMP_FILE
+    decrypt_config $TMP_FILE
+    TMP_FILE="${TMP_FILE%.nc}"
+fi
+
+# Source and cleanup
+. $TMP_FILE
+rm $TMP_FILE*
+
+# Prompt the user for input, using the current values as defaults
+read -p "Database Host [default: $DB_HOST]: " x
+DB_HOST=${x:-$DB_HOST}
+
+read -p "Database Name [default: $DB_NAME]: " x
+DB_NAME=${x:-$DB_NAME}
+
+read -p "Database User [default: $DB_USER]: " x
+DB_USER=${x:-$DB_USER}
+
+read -s -p "Database Password [default: xxxx]: " x
+DB_PASSWORD=${x:-$DB_PASSWORD}
+echo
+
+# Export the variables
+export DB_HOST
+export DB_NAME
+export DB_USER
+export DB_PASSWORD
+
+echo
+echo
+echo 'Starting pine...'
+echo
+echo 'Once ready, go to https://try.pine-lang.org to start using it.'
+echo
+echo
+
+docker compose up --force-recreate --remove-orphans

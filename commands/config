@@ -2,6 +2,6 @@
 set -e
 . "$WORKDIR/common"
 
-cd $WORKDIR
+cd $CONFIG_DIR
 
-cat pine-lang/src/pine/config.clj
+ls

@@ -1,4 +1,22 @@
-# pine-cli
+# Pine CLI
+
+Run the server:
+
+```
+pine run serve
+```
+
+or with a specific configuration:
+
+```
+CONFIG=default pine run serve
+```
+
+or use encrypted configuration:
+
+```
+CONFIG=prod.nc pine run serve
+```
 
 # Dev Setup
 
@@ -10,12 +28,9 @@ git clone --recurse-submodules git@github.com:pine-lang/pine-cli.git
 
 One time setup:
 
-
-- Create `pine-lang/src/pine/config.clj`
 - Install dependencies `cd pine-app && npm install`
 
-Run the server and the web app:
-
 ```
-pine serve
+pine run dev-server
+pine run app
 ```

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-CONFIG_DIR=~/.config/pine-cli
+CONFIG_DIR=~/.config/pine-lang
+TMP_DIR=/tmp/.pine-lang
 
 cli_log() {
   script_name=${0##*/}

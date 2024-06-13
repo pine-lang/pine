@@ -1,0 +1,12 @@
+services:
+  server:
+    image: "ahmadnazir/pine:0.4.7"
+    ports:
+      - "33333:33333"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - DB_HOST
+      - DB_NAME
+      - DB_USER
+      - DB_PASSWORD
