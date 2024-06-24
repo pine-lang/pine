@@ -12,7 +12,6 @@ cli_help() {
   Version: $(cat $WORKDIR/VERSION)
   https://github.com/pine-lang/pine-cli
 `cat $WORKDIR/art/logo.txt`
-\033[0m
 
 Usage: $cli_name [command]
 
@@ -22,10 +21,12 @@ Commands:
 
 Only for Dev:
   run app       Run the pine server and the web app
-  run repl      Run the clojure repl for development. Connect to it using emacs `cider-connect-clj` [Not needed for pine-reborn]
+  run repl      Run the clojure repl for development. Connect to it using emacs \`cider-connect-clj\` [Not needed for pine-reborn]
   *             Help
+
+\033[0m
 "
-  exit 1
+  exit 0
 }
 
 
@@ -35,7 +36,10 @@ main () {
             "$WORKDIR/commands/app" | tee -ia "$WORKDIR/logs/app.log"
             ;;
         server)
-            "$WORKDIR/commands/server" $2 | tee -ia "$WORKDIR/logs/server.log"
+            "$WORKDIR/commands/server" $1 | tee -ia "$WORKDIR/logs/server.log"
+            ;;
+        reborn)
+            "$WORKDIR/commands/reborn" $1 | tee -ia "$WORKDIR/logs/reborn.log"
             ;;
         repl)
             "$WORKDIR/commands/repl" | tee -ia "$WORKDIR/logs/repl.log"

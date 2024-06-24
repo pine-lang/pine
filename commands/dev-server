@@ -1,9 +1,0 @@
-
-#!/usr/bin/env bash
-. "$WORKDIR/common"
-
-cd $WORKDIR
-
-cli_log "Running in dev mode"
-cd pine-lang
-./server.sh
