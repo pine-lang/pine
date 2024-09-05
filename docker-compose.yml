@@ -1,6 +1,6 @@
 services:
   server:
-    image: "ahmadnazir/pine:0.4.8"
+    image: "ahmadnazir/pine:0.8.1"
     ports:
       - "33333:33333"
     extra_hosts:

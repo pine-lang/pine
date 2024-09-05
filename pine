@@ -36,10 +36,7 @@ main () {
             "$WORKDIR/commands/app" | tee -ia "$WORKDIR/logs/app.log"
             ;;
         server)
-            "$WORKDIR/commands/server" $1 | tee -ia "$WORKDIR/logs/server.log"
-            ;;
-        reborn)
-            "$WORKDIR/commands/reborn" $1 | tee -ia "$WORKDIR/logs/reborn.log"
+            "$WORKDIR/commands/server" $3 | tee -ia "$WORKDIR/logs/server.log"
             ;;
         repl)
             "$WORKDIR/commands/repl" | tee -ia "$WORKDIR/logs/repl.log"

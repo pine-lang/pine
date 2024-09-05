@@ -33,18 +33,18 @@ fi
 . $TMP_FILE
 rm $TMP_FILE*
 
-# Prompt the user for input, using the current values as defaults
-read -p "Database Host [default: $DB_HOST]: " x
-DB_HOST=${x:-$DB_HOST}
+# Prompt the user with all the settings
+echo
+echo "Configuration from '$TMP_FILE'"
+echo
+echo "  Database Host     : $DB_HOST "
+echo "  Database Name     : $DB_NAME "
+echo "  Database User     : $DB_USER "
+echo "  Database Password : xxx"
+echo
 
-read -p "Database Name [default: $DB_NAME]: " x
-DB_NAME=${x:-$DB_NAME}
-
-read -p "Database User [default: $DB_USER]: " x
-DB_USER=${x:-$DB_USER}
-
-read -s -p "Database Password [default: xxxx]: " x
-DB_PASSWORD=${x:-$DB_PASSWORD}
+# Prompt the user to continue
+read -n 1 -s -r -p "Continue?"
 echo
 
 # Export the variables
@@ -61,4 +61,11 @@ echo 'Once ready, go to https://try.pine-lang.org to start using it.'
 echo
 echo
 
-docker compose up --force-recreate --remove-orphans
+if [ "$1" == "--dev" ]; then
+    cli_log "Running in dev mode"
+    cd pine-lang
+    ./server.sh
+else
+    docker compose up --force-recreate --remove-orphans
+fi
+
